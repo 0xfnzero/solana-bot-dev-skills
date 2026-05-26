@@ -62,8 +62,8 @@ Node.js SDK 源码仓库当前有比 npm 更新的 tag/package metadata（`sol-p
 克隆并安装：
 
 ```bash
-git clone https://github.com/0xfnzero/AI-Skills.git
-cd AI-Skills
+git clone https://github.com/0xfnzero/solana-bot-dev-skills.git
+cd solana-bot-dev-skills
 chmod +x scripts/install.sh
 ./scripts/install.sh
 ```
@@ -99,7 +99,7 @@ chmod +x scripts/install.sh
 ## 目录结构
 
 ```text
-AI-Skills/
+solana-bot-dev-skills/
 ├── README.md
 ├── README_CN.md
 ├── SKILLS_EXTENSION.md
