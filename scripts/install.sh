@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-# 一键安装 Cursor Skills，并可选自动克隆依赖到项目根目录（sol-parser-sdk、sol-trade-sdk）
+# 一键安装 AI agent skills，并可选自动克隆依赖到项目根目录
+# 支持 Cursor、Codex、Claude Code 等读取 SKILL.md 的开发工具。
 # 用法：
 #   在 AI-Skills 仓库根目录执行: ./scripts/install.sh
 #   仅安装 Skills（不下载 SDK 源码）: ./scripts/install.sh --skills-only
@@ -14,33 +15,43 @@ fi
 # 若当前不在 AI-Skills 仓库内，尝试通过 git 找到仓库根
 REPO_ROOT="${REPO_ROOT:-}"
 if [[ -z "$REPO_ROOT" ]]; then
-  if [[ -d ".cursor/skills" ]]; then
+  if [[ -d "skills" ]]; then
     REPO_ROOT="."
   elif [[ -d ".git" ]]; then
     REPO_ROOT="$(git rev-parse --show-toplevel)"
   fi
 fi
 
-if [[ -z "$REPO_ROOT" || ! -d "$REPO_ROOT/.cursor/skills" ]]; then
+if [[ -z "$REPO_ROOT" || ! -d "$REPO_ROOT/skills" ]]; then
   echo "错误: 请在 AI-Skills 仓库根目录下执行此脚本，或设置 REPO_ROOT 指向该目录。"
   echo "示例: git clone https://github.com/0xfnzero/AI-Skills.git && cd AI-Skills && ./scripts/install.sh"
   exit 1
 fi
 
 cd "$REPO_ROOT"
-CURSOR_SKILLS_DIR="${HOME}/.cursor/skills"
-mkdir -p "$CURSOR_SKILLS_DIR"
+SOURCE_SKILLS_DIR="$REPO_ROOT/skills"
 
-# 复制所有 skill 到个人目录
-for skill in .cursor/skills/*/; do
-  if [[ -d "$skill" ]]; then
-    name=$(basename "$skill")
-    cp -r "$skill" "$CURSOR_SKILLS_DIR/"
-    echo "已安装 skill: $name"
-  fi
-done
+install_for_tool() {
+  local tool_name="$1"
+  local target_dir="$2"
 
-echo "Skills 已复制到: $CURSOR_SKILLS_DIR"
+  mkdir -p "$target_dir"
+  for skill in "$SOURCE_SKILLS_DIR"/*/; do
+    if [[ -d "$skill" && -f "$skill/SKILL.md" ]]; then
+      local name
+      name=$(basename "$skill")
+      rm -rf "$target_dir/$name"
+      mkdir -p "$target_dir/$name"
+      cp -R "$skill"/. "$target_dir/$name/"
+      echo "已为 $tool_name 安装 skill: $name"
+    fi
+  done
+  echo "$tool_name Skills 已复制到: $target_dir"
+}
+
+install_for_tool "Cursor" "${CURSOR_SKILLS_DIR:-$HOME/.cursor/skills}"
+install_for_tool "Codex" "${CODEX_SKILLS_DIR:-$HOME/.codex/skills}"
+install_for_tool "Claude Code" "${CLAUDE_SKILLS_DIR:-$HOME/.claude/skills}"
 
 if [[ "$SKILLS_ONLY" == true ]]; then
   echo "已跳过 SDK 源码克隆（--skills-only）。"
@@ -71,14 +82,23 @@ clone_or_update_repo() {
     echo "已克隆: $name (HTTPS)"
   else
     echo "警告: 克隆失败 $name，请检查网络或手动执行: git clone $url_https $target"
-    return 1
+    return 0
   fi
 }
 
 clone_or_update_repo "git@github.com:0xfnzero/sol-parser-sdk.git" "sol-parser-sdk"
 clone_or_update_repo "git@github.com:0xfnzero/sol-trade-sdk.git" "sol-trade-sdk"
+clone_or_update_repo "git@github.com:0xfnzero/solana-streamer.git" "solana-streamer"
+clone_or_update_repo "git@github.com:0xfnzero/sol-safekey.git" "sol-safekey"
+clone_or_update_repo "git@github.com:0xfnzero/sol-parser-sdk-nodejs.git" "sol-parser-sdk-nodejs"
+clone_or_update_repo "git@github.com:0xfnzero/sol-parser-sdk-python.git" "sol-parser-sdk-python"
+clone_or_update_repo "git@github.com:0xfnzero/sol-parser-sdk-golang.git" "sol-parser-sdk-golang"
+clone_or_update_repo "git@github.com:0xfnzero/sol-trade-sdk-nodejs.git" "sol-trade-sdk-nodejs"
+clone_or_update_repo "git@github.com:0xfnzero/sol-trade-sdk-python.git" "sol-trade-sdk-python"
+clone_or_update_repo "git@github.com:0xfnzero/sol-trade-sdk-golang.git" "sol-trade-sdk-golang"
 
 echo ""
 echo "安装完成。"
-echo "  - Skills 已安装到: $CURSOR_SKILLS_DIR"
-echo "  - 项目根目录已就绪: $REPO_ROOT/sol-parser-sdk, $REPO_ROOT/sol-trade-sdk"
+echo "  - Skills 源目录: $SOURCE_SKILLS_DIR"
+echo "  - 已安装到 Cursor/Codex/Claude Code 的用户级 skills 目录"
+echo "  - 项目根目录已就绪: Rust SDK、solana-streamer、sol-safekey，以及 parser/trade 的 Node.js/Python/Go SDK 源码"

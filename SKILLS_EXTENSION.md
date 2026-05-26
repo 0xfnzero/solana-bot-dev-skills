@@ -1,7 +1,7 @@
 # 技能拓展建议 / Skills extension ideas
 
-在现有 6 个技能基础上，可考虑以下拓展方向，便于按需新增或迭代技能。  
-Below are suggested directions for extending skills beyond the current six.
+本仓库的技能统一存放在顶层 `skills/` 目录，再由 `scripts/install.sh` 分发到 Cursor、Codex、Claude Code 等工具的用户级目录。
+Skills are stored in the top-level `skills/` directory and installed into tool-specific user directories by `scripts/install.sh`.
 
 ---
 
@@ -9,43 +9,49 @@ Below are suggested directions for extending skills beyond the current six.
 
 | 技能 | 说明 |
 |------|------|
-| sol-trade-sdk-usage | 使用 sol-trade-sdk 构建买卖参数、发单、SWQoS/MEV、与 parser 事件对接 |
-| sol-parser-sdk-account-subscription | 账户订阅：余额、池、ATA、memcmp 过滤，与交易订阅的区别 |
+| `solana-bot-sdk-orchestrator` | 跨 SDK 的 Solana Bot 架构编排：stream、strategy、execution、risk、wallet |
+| `solana-streamer-bot` | 使用 solana-streamer-sdk 构建 gRPC/ShredStream/account/RPC replay 事件流 |
+| `sol-parser-sdk-bot` | 直接使用 sol-parser-sdk：解析、过滤、RPC 解析、账户订阅、parser 开发 |
+| `sol-trade-sdk-bot` | 使用 sol-trade-sdk 构建/发送交易、SWQoS/MEV、gas、nonce、狙击/跟单执行 |
+| `sol-safekey-bot` | 使用 sol-safekey 做加密 keystore、钱包解锁、stdin 密码和安全启动 |
 
 ---
 
 ## 可选拓展 / Optional extensions
 
-1. **RPC 解析 vs gRPC 流**  
-   - 何时用 `parse_transaction_from_rpc` / `parse_rpc_transaction`（回放、单笔调试、按签名解析）vs gRPC 实时流。  
-   - 技能名建议：`sol-parser-sdk-rpc-vs-grpc` 或合并进 grpc-usage。
+1. **多语言 SDK 深化 / Multi-language SDK details**
+   - 为 Node.js/TypeScript、Python、Go 分别补充更具体的安装、类型、异步和错误处理约定。
+   - 可作为现有 `sol-parser-sdk-bot`、`sol-trade-sdk-bot` 的 reference 文件，也可拆分成独立技能。
 
-2. **多协议聚合 / Multi-DEX**  
-   - 同时监听多 DEX（PumpFun + PumpSwap + Raydium + Meteora）时如何设计过滤器、归一化事件、去重。  
-   - 技能名建议：`sol-parser-sdk-multi-dex`。
+2. **测试与调试 / Testing and debugging**
+   - 用 RPC 按签名解析单笔交易做回归；为新事件写单元测试；维护真实签名样例。
+   - 技能名建议：`solana-bot-testing-debug`。
 
-3. **测试与调试**  
-   - 用 RPC 按签名解析单笔交易做回归；`debug_pump_tx`、`debug_pumpswap_tx`、`test_account_filling` 等示例；为新事件写单元测试。  
-   - 技能名建议：`sol-parser-sdk-testing-debug`。
+3. **交易安全与风控 / Trading safety and risk**
+   - 仿真、滑点、限频、仓位上限、重复交易防护、quote mint allowlist、日志脱敏。
+   - 技能名建议：`solana-trading-risk-controls`。
 
-4. **SWQoS / MEV 发单**  
-   - sol-trade-sdk 侧：Jito、Nextblock、ZeroSlot 等配置、多路并发发单、速度与成功率权衡。可并入 sol-trade-sdk-usage 或单独 `sol-trade-sdk-swqos-mev`。
+4. **SWQoS / MEV 专项 / SWQoS and MEV sending**
+   - Jito、Nextblock、ZeroSlot、Temporal、Bloxroute、FlashBlock、BlockRazor、Node1、Astralane 等配置和权衡。
+   - 可并入 `sol-trade-sdk-bot` 或单独 `sol-trade-sdk-swqos-mev`。
 
-5. **交易安全与风控**  
-   - 仿真（simulate）、滑点、私钥不落库、限频、简单 MEV 防护。偏规范与最佳实践。  
-   - 技能名建议：`trading-safety-risk`。
+5. **多协议聚合 / Multi-DEX aggregation**
+   - PumpFun、PumpSwap、Bonk/Raydium Launchpad、Raydium、Meteora、Orca 的事件归一化、去重和策略接口。
+   - 技能名建议：`solana-multi-dex-bot`。
 
-6. **sol-trade-sdk 开发/贡献**  
-   - 类似 sol-parser-sdk-dev：项目结构、添加新协议指令、TradeFactory、params 扩展。  
-   - 技能名建议：`sol-trade-sdk-dev`。
+6. **SDK 贡献开发 / SDK contribution**
+   - sol-trade-sdk 或 solana-streamer 的项目结构、添加协议、参数扩展、性能测试和发布前检查。
+   - 技能名建议：`sol-trade-sdk-dev`、`solana-streamer-dev`。
 
 7. **代币元数据 / Token metadata**  
-   - 从 mint 获取 name、symbol、decimals（Metaplex 等），用于狙击/跟单展示或风控。  
-   - 技能名建议：`token-metadata-mint` 或合并进业务类技能。
+   - 从 mint 获取 name、symbol、decimals、Metaplex metadata，用于展示、筛选和风控。
+   - 技能名建议：`solana-token-metadata`。
 
 ---
 
-## 使用方式
+## 新增方式 / How to add a skill
 
-- 需要某方向时，在 `.cursor/skills/` 下新增对应目录与 `SKILL.md`，并在 README 技能列表中登记。  
-- 安装脚本 `scripts/install.sh` 会复制 `.cursor/skills/` 下所有目录，无需改脚本。
+- 在 `skills/<skill-name>/SKILL.md` 新增技能。
+- 在 `README.md` 和 `README_CN.md` 的技能表中登记。
+- 不要把源技能只放到 `.cursor/skills/`、`.codex/skills/` 或 `.claude/skills/`；这些是安装目标。
+- `scripts/install.sh` 会复制 `skills/` 下所有包含 `SKILL.md` 的目录，通常无需修改脚本。

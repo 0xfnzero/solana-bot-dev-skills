@@ -1,6 +1,14 @@
 # 由 install.sh 克隆到项目根目录，不纳入版本库
 sol-parser-sdk/
 sol-trade-sdk/
+solana-streamer/
+sol-safekey/
+sol-parser-sdk-nodejs/
+sol-parser-sdk-python/
+sol-parser-sdk-golang/
+sol-trade-sdk-nodejs/
+sol-trade-sdk-python/
+sol-trade-sdk-golang/
 
 # 常见系统与编辑器
 .DS_Store

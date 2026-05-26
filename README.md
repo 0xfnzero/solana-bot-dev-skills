@@ -1,28 +1,10 @@
 <div align="center">
-    <h1>⚡ AI-Skills</h1>
-    <h3><em>Cursor Agent Skills for Solana — sol-parser-sdk & sol-trade-sdk</em></h3>
+    <h1>AI-Skills</h1>
+    <h3><em>Agent skills for Solana bot development</em></h3>
 </div>
 
 <p align="center">
-    <strong>Curated Cursor skills so the AI gives accurate, context-aware help when you develop or use <a href="https://github.com/0xfnzero/sol-parser-sdk">sol-parser-sdk</a> and <a href="https://github.com/0xfnzero/sol-trade-sdk">sol-trade-sdk</a>: DEX event parsing, gRPC streaming, sniping, copy trading, account subscription, and building/sending trades.</strong>
-</p>
-
-<p align="center">
-    <a href="https://github.com/0xfnzero/AI-Skills/blob/main/LICENSE">
-        <img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License">
-    </a>
-    <a href="https://github.com/0xfnzero/AI-Skills">
-        <img src="https://img.shields.io/github/stars/0xfnzero/AI-Skills?style=social" alt="GitHub stars">
-    </a>
-    <a href="https://github.com/0xfnzero/AI-Skills/network">
-        <img src="https://img.shields.io/github/forks/0xfnzero/AI-Skills?style=social" alt="GitHub forks">
-    </a>
-</p>
-
-<p align="center">
-    <img src="https://img.shields.io/badge/Cursor-AI%20Skills-000?style=for-the-badge" alt="Cursor">
-    <img src="https://img.shields.io/badge/Solana-9945FF?style=for-the-badge&logo=solana&logoColor=white" alt="Solana">
-    <img src="https://img.shields.io/badge/Rust-000000?style=for-the-badge&logo=rust&logoColor=white" alt="Rust">
+    <strong>Community-ready skills for Codex, Claude Code, Cursor, and other coding agents when building bots with <a href="https://github.com/0xfnzero/sol-trade-sdk">sol-trade-sdk</a>, <a href="https://github.com/0xfnzero/solana-streamer">solana-streamer</a>, <a href="https://github.com/0xfnzero/sol-parser-sdk">sol-parser-sdk</a>, and <a href="https://github.com/0xfnzero/sol-safekey">sol-safekey</a>.</strong>
 </p>
 
 <p align="center">
@@ -35,165 +17,114 @@
 
 ---
 
-## Contents
+## What This Repo Provides
 
-- [What are Cursor Skills?](#what-are-cursor-skills)
-- [Skills in this repo](#skills-in-this-repo)
-- [How to install the skills](#how-to-install-the-skills)
-  - [One-command install (recommended)](#one-command-install-recommended)
-  - [Using project-level skills](#using-project-level-skills)
-  - [Do I need the SDK source?](#do-i-need-the-sdk-source-when-using-these-skills-in-my-own-project)
-- [How to use the skills](#how-to-use-the-skills)
-  - [Just ask in natural language](#just-ask-in-natural-language)
-  - [Quick reference: what to ask → which skill](#quick-reference-what-to-ask--which-skill)
-- [Directory layout](#directory-layout-relevant-to-this-guide)
-- [Summary](#summary)
+This repo stores skills in the neutral top-level `skills/` directory. The skills are plain `SKILL.md` folders, so they can be installed into different agent tools instead of being tied to only Cursor.
 
----
+The installer copies the same source skills to:
 
-## What are Cursor Skills?
+| Tool | Default install path |
+|------|----------------------|
+| Cursor | `~/.cursor/skills/` |
+| Codex | `~/.codex/skills/` |
+| Claude Code | `~/.claude/skills/` |
 
-Skills are instruction files that teach the AI how to answer and act in specific situations:
+You can override these paths with `CURSOR_SKILLS_DIR`, `CODEX_SKILLS_DIR`, or `CLAUDE_SKILLS_DIR`.
 
-- **Project-level skills**: Live in `.cursor/skills/` in the repo; anyone who clones and opens the repo in Cursor can use them.
-- **User-level skills**: Live in `~/.cursor/skills/` on your machine and apply across all your projects.
+## Skills
 
-This repo ships **project-level skills**. Open this repo (or a parent folder that contains it) in Cursor and they are available with no extra install step.
+| Skill | Purpose |
+|-------|---------|
+| `solana-bot-sdk-orchestrator` | Chooses SDK boundaries and wires stream, strategy, execution, risk, and wallet layers for Solana bots. |
+| `solana-streamer-bot` | Builds bot-facing event streams with `solana-streamer-sdk`: Yellowstone gRPC, ShredStream, callbacks, filters, account updates, and RPC replay. |
+| `sol-parser-sdk-bot` | Uses `sol-parser-sdk` directly for parsing, event filters, gRPC subscriptions, account subscriptions, RPC parsing, ShredStream, and parser contribution work. |
+| `sol-trade-sdk-bot` | Builds and sends DEX trades with `sol-trade-sdk`: buy/sell params, SWQoS/MEV, gas fee strategy, nonce, ALT, sniping, and copy trading execution. |
+| `sol-safekey-bot` | Integrates encrypted wallet and key management with `sol-safekey`: keystores, unlock flow, stdin password handling, and secure bot startup. |
 
----
+The SDK families include Rust plus multi-language variants where available:
 
-## Skills in this repo
+- `sol-parser-sdk`: Rust, Node.js/TypeScript, Python, Go
+- `sol-trade-sdk`: Rust, Node.js/TypeScript, Python, Go
 
-| Skill | Type | Purpose |
-|-------|------|---------|
-| **sol-parser-sdk-dev** | Dev | Contributing to sol-parser-sdk: project layout, build/test, adding new protocols or event types |
-| **sol-parser-sdk-rust-patterns** | Dev | Rust and perf patterns in the SDK: SIMD, zero-copy, Borsh, lock-free queues, hot-path optimizations |
-| **sol-parser-sdk-dex-events** | Biz | DEX event types, supported protocols, and scenarios: trading bots, pool monitors, event filtering |
-| **sol-parser-sdk-grpc-usage** | Biz | gRPC client, OrderMode, transaction/account/event filters, queue consumption, RPC parsing, account subscriptions |
-| **sol-parser-sdk-sniping** | Biz | Sniping new tokens (needs **both** sol-parser-sdk + sol-trade-sdk): Create/first-buy, is_created_buy, lowest-latency; parser discovers, trade-sdk sends buy |
-| **sol-parser-sdk-copy-trading** | Biz | Copy trading (needs **both** sol-parser-sdk + sol-trade-sdk): filter tx by wallet, parse buys/sells; parser discovers, trade-sdk sends copy orders |
-| **sol-trade-sdk-usage** | Biz | Build and send DEX trades with sol-trade-sdk: TradeBuyParams, PumpFunParams::from_dev_trade, SWQoS/MEV, slippage; pairs with parser for sniping/copy |
-| **sol-parser-sdk-account-subscription** | Biz | Account subscription: token balance, nonce, pool account, ATA by mint, memcmp filters; when to use account vs transaction subscription |
+Current package names and directly installable package versions:
 
-**Language**: All skills support both Chinese and English. Descriptions and section titles are bilingual; you can ask in either language to trigger and use them.
+| SDK | Rust | Node.js/TypeScript | Python | Go |
+|-----|------|--------------------|--------|----|
+| parser | `sol-parser-sdk@0.5.1` | `sol-parser-sdk-nodejs@0.4.4` on npm | `sol-parser-sdk-python==0.4.5` | `github.com/0xfnzero/sol-parser-sdk-golang@v0.4.5` |
+| trade | `sol-trade-sdk@4.0.14` | `sol-trade-sdk@0.1.0` on npm | `sol-trade-sdk==0.1.1` | `github.com/0xfnzero/sol-trade-sdk-golang@v0.1.1` |
 
----
+The Node.js SDK source repositories currently have newer tags/package metadata than npm (`sol-parser-sdk-nodejs` `v0.4.5`, `sol-trade-sdk-nodejs` `v0.1.1`). The skills call this out so agents do not generate npm install commands for unpublished versions.
 
-## How to install the skills
+For non-Rust code, the skills instruct agents to inspect the target language's README/examples before assuming API names.
 
-### One-command install (recommended)
+## Install
 
-Run this in your terminal to clone the repo, install the skills into Cursor, and clone [sol-parser-sdk](https://github.com/0xfnzero/sol-parser-sdk) and [sol-trade-sdk](https://github.com/0xfnzero/sol-trade-sdk) into the repo root:
+Clone and install:
 
 ```bash
-git clone https://github.com/0xfnzero/AI-Skills.git && cd AI-Skills && chmod +x scripts/install.sh && ./scripts/install.sh
-```
-
-If you already have the repo, from the repo root run:
-
-```bash
+git clone https://github.com/0xfnzero/AI-Skills.git
+cd AI-Skills
+chmod +x scripts/install.sh
 ./scripts/install.sh
 ```
 
-The script will:
+The script:
 
-1. Copy all skills from `.cursor/skills/` to `~/.cursor/skills/` so they apply in any project you open in Cursor.
-2. Clone sol-parser-sdk and sol-trade-sdk into the **repo root** (tries SSH first, then HTTPS).
+1. Copies all folders from `skills/` into Cursor, Codex, and Claude Code user-level skill directories.
+2. Clones or updates the SDK source repos in this repo root:
+   - `sol-parser-sdk`
+   - `sol-trade-sdk`
+   - `solana-streamer`
+   - `sol-safekey`
+   - multi-language parser/trade SDK repos for Node.js, Python, and Go
 
-To **install only the skills** (no SDK source, e.g. you depend on crates.io only):
+Install only the skills without cloning SDK source:
 
 ```bash
 ./scripts/install.sh --skills-only
 ```
 
-### Using project-level skills
+## Usage
 
-When you open this repo in Cursor, the skills under `.cursor/skills/` are used automatically. To use them in other projects too, run the one-command install or `./scripts/install.sh` so the skills are copied to your user directory.
+Ask your coding agent naturally:
 
-### Do I need the SDK source when using these skills in my own project?
+- "Build a PumpFun sniper using solana-streamer and sol-trade-sdk."
+- "Use sol-safekey so the bot never stores a plaintext private key."
+- "Write a copy-trading bot that follows this wallet and simulates first."
+- "Use sol-parser-sdk directly to parse a transaction by signature."
+- "Port this Rust bot shape to TypeScript using the Node.js SDK variant."
 
-- **Only using sol-parser-sdk as a dependency (e.g. from crates.io)**  
-  No. Run `./scripts/install.sh --skills-only` and add `sol-parser-sdk = "0.2.2"` (or similar) in your project.
+When a task spans multiple SDKs, the orchestrator skill should trigger first, then hand off to the specialized SDK skill.
 
-- **Editing or reading the SDK source**  
-  Yes. Run `./scripts/install.sh` without `--skills-only`; the script will clone sol-parser-sdk and sol-trade-sdk into this repo's root (next to `.cursor/`, `scripts/`).
+## Directory Layout
 
----
-
-## How to use the skills
-
-You don't enable skills manually. Cursor picks which skill to use from the **intent and keywords** in your message.
-
-### Just ask in natural language
-
-In Cursor's AI chat, describe what you want. For example:
-
-- **Development**
-  - "How do I add a new DEX protocol in sol-parser-sdk?"
-  - "What are the rules for zero-copy on the parse hot path?"
-  - "What do instr and logs do in this project structure?"
-
-- **Usage / business**
-  - "How do I set EventTypeFilter for only PumpFun buy and sell?"
-  - "What's the difference between Unordered and MicroBatch for gRPC?"
-  - "I want to monitor new-token first buys; which events should I subscribe to?"
-- **Sniping**
-  - "How do I build a sniper bot with sol-parser-sdk?" "What is is_created_buy?"
-  - "Lowest latency setup for new token first buy"
-- **Copy trading**
-  - "How do I follow a wallet's trades with sol-parser-sdk?" "Filter transactions by wallet address"
-- **Building/sending trades (sol-trade-sdk)**
-  - "How do I build a buy from a PumpFun event?" "PumpFunParams::from_dev_trade"
-  - "How do I configure SWQoS or Jito for sending trades?"
-- **Account subscription**
-  - "How do I subscribe to token account balance changes?" "memcmp filter for ATA"
-
-When your question matches one of these areas, Cursor will use the right skill to answer in line with sol-parser-sdk's code and usage.
-
-### Quick reference: what to ask → which skill
-
-| What you want | Example questions / keywords | Skill used |
-|---------------|-------------------------------|------------|
-| Add new protocol/event to SDK | "add new protocol", "new event type", "project structure" | sol-parser-sdk-dev |
-| Run tests, build, change structure | "test", "build", "cargo" | sol-parser-sdk-dev |
-| Parser/perf code (zero-copy, SIMD, etc.) | "zero-copy", "SIMD", "Borsh", "lock-free", "hot path" | sol-parser-sdk-rust-patterns |
-| Filter events, understand event types | "event types", "PumpFun/PumpSwap", "trading bot", "pool monitor" | sol-parser-sdk-dex-events |
-| gRPC, ordering, filters, RPC parsing | "gRPC subscribe", "OrderMode", "TransactionFilter", "RPC parse" | sol-parser-sdk-grpc-usage |
-| Sniping new tokens, first buy | "sniper", "sniping", "is_created_buy", "new token first buy" | sol-parser-sdk-sniping |
-| Copy trading, follow wallet | "copy trading", "follow wallet", "account_include", "track wallet trades" | sol-parser-sdk-copy-trading |
-| Build/send trade with sol-trade-sdk | "TradeBuyParams", "from_dev_trade", "SWQoS", "slippage", "SolanaTrade" | sol-trade-sdk-usage |
-| Account subscription, balance listen | "account subscription", "token balance", "memcmp", "ATA", "nonce listen" | sol-parser-sdk-account-subscription |
-
----
-
-## Directory layout (relevant to this guide)
-
-```
+```text
 AI-Skills/
-├── README.md                 # This guide (English)
-├── README_CN.md              # 中文说明
+├── README.md
+├── README_CN.md
+├── SKILLS_EXTENSION.md
 ├── scripts/
-│   └── install.sh            # One-command install: copy skills + clone SDKs to root
-├── .cursor/
-│   └── skills/
-│       ├── sol-parser-sdk-dev/
-│       ├── sol-parser-sdk-rust-patterns/
-│       ├── sol-parser-sdk-dex-events/
-│       ├── sol-parser-sdk-grpc-usage/
-│       ├── sol-parser-sdk-sniping/
-│       ├── sol-parser-sdk-copy-trading/
-│       ├── sol-trade-sdk-usage/
-│       └── sol-parser-sdk-account-subscription/
-├── sol-parser-sdk/           # Cloned by install.sh
-└── sol-trade-sdk/            # Cloned by install.sh
+│   └── install.sh
+├── skills/
+│   ├── solana-bot-sdk-orchestrator/
+│   │   └── SKILL.md
+│   ├── solana-streamer-bot/
+│   │   └── SKILL.md
+│   ├── sol-parser-sdk-bot/
+│   │   └── SKILL.md
+│   ├── sol-trade-sdk-bot/
+│   │   └── SKILL.md
+│   └── sol-safekey-bot/
+│       └── SKILL.md
+├── sol-parser-sdk/      # cloned by install.sh unless --skills-only
+├── sol-trade-sdk/       # cloned by install.sh unless --skills-only
+├── solana-streamer/     # cloned by install.sh unless --skills-only
+├── sol-safekey/         # cloned by install.sh unless --skills-only
+└── sol-*-sdk-{nodejs,python,golang}/
 ```
 
----
+## Notes
 
-## Summary
-
-- **Install**: From the repo root run `./scripts/install.sh` (or use the one-command clone + install). The script installs skills to `~/.cursor/skills/` and clones sol-parser-sdk and sol-trade-sdk into the repo root. Use `./scripts/install.sh --skills-only` if you only want the skills.
-- **Use**: Ask in Cursor as usual; when the topic is development, perf, event types, gRPC, sniping, or copy trading, the AI will use the matching skill to answer.
-- **Dependencies**: In your own project you can depend on the SDK via crates.io (e.g. `sol-parser-sdk = "0.2.2"`). When you need to read or change SDK source, use the clones under `sol-parser-sdk/` and `sol-trade-sdk/`. **Sniping and copy trading** require both sol-parser-sdk and sol-trade-sdk.
-
-For more on sol-parser-sdk usage and examples, see [sol-parser-sdk/README.md](sol-parser-sdk/README.md) and [sol-parser-sdk/README_CN.md](sol-parser-sdk/README_CN.md). For **further skill ideas** (RPC vs gRPC, multi-DEX, testing, MEV, etc.), see [SKILLS_EXTENSION.md](SKILLS_EXTENSION.md).
+- `skills/` is the canonical source. Tool-specific directories are installation targets, not the repo's storage format.
+- The skills are designed for bot development, not financial advice. Generated bots should default to simulation or tiny test amounts until reviewed.
+- Do not commit private keys, keystores, API tokens, or `.env` files.
