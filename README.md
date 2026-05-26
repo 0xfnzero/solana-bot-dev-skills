@@ -1,5 +1,5 @@
 <div align="center">
-    <h1>AI-Skills</h1>
+    <h1>solana-bot-dev-skills</h1>
     <h3><em>Agent skills for Solana bot development</em></h3>
 </div>
 
