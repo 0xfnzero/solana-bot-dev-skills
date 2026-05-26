@@ -62,8 +62,8 @@ For non-Rust code, the skills instruct agents to inspect the target language's R
 Clone and install:
 
 ```bash
-git clone https://github.com/0xfnzero/AI-Skills.git
-cd AI-Skills
+git clone https://github.com/0xfnzero/solana-bot-dev-skills.git
+cd solana-bot-dev-skills
 chmod +x scripts/install.sh
 ./scripts/install.sh
 ```
@@ -99,7 +99,7 @@ When a task spans multiple SDKs, the orchestrator skill should trigger first, th
 ## Directory Layout
 
 ```text
-AI-Skills/
+solana-bot-dev-skills/
 ├── README.md
 ├── README_CN.md
 ├── SKILLS_EXTENSION.md
