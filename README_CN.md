@@ -1,5 +1,5 @@
 <div align="center">
-    <h1>AI-Skills</h1>
+    <h1>solana-bot-dev-skills</h1>
     <h3><em>面向 Solana Bot 开发的 Agent Skills</em></h3>
 </div>
 
@@ -20,6 +20,15 @@
 ## 这个仓库提供什么
 
 本仓库把技能统一存放在顶层 `skills/` 目录。每个技能都是标准的 `SKILL.md` 文件夹，因此不会绑定到某一个开发工具，例如只放在 `.cursor/skills/`。
+
+## 为什么使用这些 Skills
+
+这些 skills 会给开发工具提供基于 FNZero Solana Bot SDK 栈的上下文，而不是只依赖模型的通用记忆。它们可以帮助 agent：
+
+- 正确选择 streaming、parsing、trading、wallet security 的 SDK 边界；
+- 在写 Node.js/TypeScript、Python、Go 代码时避免过期 API、未发布包版本和 Rust-only 的错误假设；
+- 更稳妥地组织狙击、跟单、账户监听、simulation、安全钱包解锁等常见 Bot 流程；
+- 用同一份技能源同时支持 Codex、Claude Code、Cursor 等开发工具。
 
 安装脚本会把同一份源技能分发到：
 

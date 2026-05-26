@@ -21,6 +21,15 @@
 
 This repo stores skills in the neutral top-level `skills/` directory. The skills are plain `SKILL.md` folders, so they can be installed into different agent tools instead of being tied to only Cursor.
 
+## Why Use These Skills
+
+These skills give coding agents repo-grounded guidance for the FNZero Solana bot SDK stack instead of relying on generic model memory. They help agents:
+
+- choose the right SDK boundary for streaming, parsing, trading, and wallet security;
+- avoid stale APIs, unpublished package versions, and Rust-only assumptions when writing Node.js/TypeScript, Python, or Go code;
+- wire common bot flows such as sniping, copy trading, account monitoring, simulation, and secure wallet unlock with safer defaults;
+- use one shared skill source across Codex, Claude Code, Cursor, and other tools.
+
 The installer copies the same source skills to:
 
 | Tool | Default install path |
