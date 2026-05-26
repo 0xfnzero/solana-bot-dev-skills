@@ -1,11 +1,11 @@
 ---
 name: solana-bot-sdk-orchestrator
-description: Use this skill when building Solana trading bots or automation that combines solana-streamer, sol-parser-sdk, sol-trade-sdk, and sol-safekey, including multi-language SDK variants for Rust, Node.js/TypeScript, Python, and Go. It helps agents choose the right SDK boundary, wire event streams into trades, handle wallet security, and produce runnable bot code for Codex, Claude Code, Cursor, or similar coding agents.
+description: Use this skill when building Solana trading bots or automation that combines solana-streamer, sol-parser-sdk, sol-trade-sdk, and sol-safekey, including multi-language SDK variants for Rust, Node.js/TypeScript, Python, and Go. Supports Chinese and English prompts, including Solana Bot, 狙击, 跟单, 监听, 钱包安全, 多语言 SDK, 交易执行, 风控, Codex, Claude Code, Cursor.
 ---
 
 # Solana Bot SDK Orchestrator
 
-Use this as the first skill when a user asks for a Solana bot, sniper, copy trader, monitor, wallet automation, multi-DEX stream, or SDK integration involving more than one FNZero SDK.
+Use this as the first skill when a user asks in Chinese or English for a Solana bot, sniper, copy trader, monitor, wallet automation, multi-DEX stream, or SDK integration involving more than one FNZero SDK.
 
 ## SDK Roles
 

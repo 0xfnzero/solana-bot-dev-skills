@@ -95,13 +95,15 @@ chmod +x scripts/install.sh
 
 ## 使用方式
 
-在开发工具里正常提问即可：
+在开发工具里用中文或英文正常提问即可。Skills 的触发描述已经包含中文关键词，例如狙击、跟单、监听、解析、发单、钱包、私钥、keystore、多语言 SDK 等，因此中文提问也可以触发对应技能。
 
-- "Build a PumpFun sniper using solana-streamer and sol-trade-sdk."
-- "Use sol-safekey so the bot never stores a plaintext private key."
-- "Write a copy-trading bot that follows this wallet and simulates first."
-- "Use sol-parser-sdk directly to parse a transaction by signature."
-- "Port this Rust bot shape to TypeScript using the Node.js SDK variant."
+- “用 solana-streamer 和 sol-trade-sdk 做一个 PumpFun 狙击 Bot。”
+- “用 sol-safekey 管理钱包，Bot 不要保存明文私钥。”
+- “写一个跟单 Bot，跟随这个钱包，但先只做 simulation。”
+- “用 sol-parser-sdk 按交易签名解析一笔交易。”
+- “把这个 Rust Bot 的结构迁移成 TypeScript，使用 Node.js 版本 SDK。”
+
+英文提问也可以，例如：`Build a PumpFun sniper using solana-streamer and sol-trade-sdk.`
 
 当任务跨多个 SDK 时，`solana-bot-sdk-orchestrator` 会先负责整体方案，再交给具体 SDK 技能。
 

@@ -1,11 +1,11 @@
 ---
 name: sol-safekey-bot
-description: Use this skill when integrating sol-safekey into Solana bots or tools, including encrypted keystores, interactive wallet management, password handling, wallet unlock, bot startup scripts, SOL/SPL/WSOL operations, durable nonce setup, and secure key handling for Rust or multi-language bot stacks.
+description: Use this skill when integrating sol-safekey into Solana bots or tools, including encrypted keystores, interactive wallet management, password handling, wallet unlock, bot startup scripts, SOL/SPL/WSOL operations, durable nonce setup, and secure key handling for Rust or multi-language bot stacks. Supports Chinese and English prompts, including 钱包, 私钥, keystore, 加密, 解锁, 密码, 安全启动, SOL, SPL, WSOL, nonce.
 ---
 
 # Sol SafeKey Bot
 
-Use `sol-safekey` whenever a bot needs wallet creation, encrypted keystore storage, unlock, or secure Solana operations.
+Use `sol-safekey` whenever a Chinese or English bot request needs wallet creation, encrypted keystore storage, unlock, or secure Solana operations.
 
 ## Core Security Rules
 

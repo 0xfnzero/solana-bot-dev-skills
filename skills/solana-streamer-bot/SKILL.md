@@ -1,11 +1,11 @@
 ---
 name: solana-streamer-bot
-description: Use this skill when building bot-facing event streams with solana-streamer or solana-streamer-sdk, including Yellowstone gRPC, ShredStream, dynamic subscriptions, DexEvent callbacks, account filters, RPC transaction replay, and migration from older trait-based streamer APIs.
+description: Use this skill when building bot-facing event streams with solana-streamer or solana-streamer-sdk, including Yellowstone gRPC, ShredStream, dynamic subscriptions, DexEvent callbacks, account filters, RPC transaction replay, and migration from older trait-based streamer APIs. Supports Chinese and English prompts, including 事件流, 监听, 订阅, gRPC, ShredStream, 账户过滤, 回调, RPC 回放, 低延迟.
 ---
 
 # Solana Streamer Bot
 
-Use `solana-streamer-sdk` for application-level bots that need stable event streams backed by `sol-parser-sdk`.
+Use `solana-streamer-sdk` for Chinese or English bot requests that need stable application-level event streams backed by `sol-parser-sdk`.
 
 ## When To Prefer Streamer
 

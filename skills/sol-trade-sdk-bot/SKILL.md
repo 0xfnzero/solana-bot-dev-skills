@@ -1,11 +1,11 @@
 ---
 name: sol-trade-sdk-bot
-description: Use this skill when building or modifying Solana trading code with sol-trade-sdk, including Rust and multi-language variants, DEX buy/sell params, PumpFun/PumpSwap/Bonk/Raydium/Meteora trading, SWQoS/MEV services, gas fee strategy, durable nonce, address lookup tables, middleware, sniping, and copy trading execution.
+description: Use this skill when building or modifying Solana trading code with sol-trade-sdk, including Rust and multi-language variants, DEX buy/sell params, PumpFun/PumpSwap/Bonk/Raydium/Meteora trading, SWQoS/MEV services, gas fee strategy, durable nonce, address lookup tables, middleware, sniping, and copy trading execution. Supports Chinese and English prompts, including 买入, 卖出, 发单, 交易参数, 狙击, 跟单, SWQoS, MEV, gas 策略, nonce, 多语言 SDK.
 ---
 
 # Sol Trade SDK Bot
 
-Use this skill for transaction construction and sending with `sol-trade-sdk`.
+Use this skill for Chinese or English requests about transaction construction and sending with `sol-trade-sdk`.
 
 ## What The SDK Provides
 

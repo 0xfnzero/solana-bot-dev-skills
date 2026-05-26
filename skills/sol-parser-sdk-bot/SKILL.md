@@ -1,11 +1,11 @@
 ---
 name: sol-parser-sdk-bot
-description: Use this skill when developing bots or SDK integrations with sol-parser-sdk, including Rust and multi-language variants, direct parsing, Yellowstone gRPC subscriptions, event filters, account subscriptions, ShredStream, RPC transaction replay, DEX event matching, and parser contribution work.
+description: Use this skill when developing bots or SDK integrations with sol-parser-sdk, including Rust and multi-language variants, direct parsing, Yellowstone gRPC subscriptions, event filters, account subscriptions, ShredStream, RPC transaction replay, DEX event matching, and parser contribution work. Supports Chinese and English prompts, including 解析, 事件过滤, 交易解析, 账户订阅, 按签名解析, DEX 事件, parser 开发, 多语言 SDK.
 ---
 
 # Sol Parser SDK Bot
 
-Use this skill for direct `sol-parser-sdk` usage. If the user wants a higher-level stream facade, consider `solana-streamer-bot` first.
+Use this skill for direct `sol-parser-sdk` usage from Chinese or English requests. If the user wants a higher-level stream facade, consider `solana-streamer-bot` first.
 
 ## What The SDK Provides
 
